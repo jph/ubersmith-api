@@ -9,7 +9,7 @@ class Ubersmith
   private $endpoint, $api_user, $api_pass, $arguments_to_send, $result, $request_url, $response;
 
   var $ubersmith_functions = [ 'list_services' => 'list_services.php' ];
-  var $ubersmith_arguments = [ 'list_services' => [ 'clientid' ] ]; # true is required
+  var $ubersmith_arguments = [ 'list_services' => [ 'clientid' ] ];
 
   function __construct($endpoint, $api_user, $api_pass)
   {
@@ -18,7 +18,11 @@ class Ubersmith
     $this->api_pass  = $api_pass;
   }
 
-  private function xml_to_json() {}
+  private function xml_to_json()
+  {
+    # convert property saved by request and save
+  }
+
   private function generate_url()
   {
     $this->request_url = $this->endpoint . $this->provided_method . ".php?api_login=" . $this->api_user . "&api_pass=" . $this->api_pass . "&";
@@ -28,8 +32,11 @@ class Ubersmith
     }
   }
 
-  private function request() {}
-  private function result() {}
+  private function request()
+  {
+    # curl 
+    # convert xml
+  }
 
   public function __call($method, $args)
   {
@@ -54,10 +61,8 @@ class Ubersmith
 
   public function result()
   {
-    if($this->result)
-      return $this->result;
-    else
-      return false;
+    # return json object
+    return $this->result;
   }
 
 }
