@@ -1,8 +1,5 @@
 <?php
 
-# example query
-# http://27.131.77.74/api/list_services.php?api_login=apiuser&api_pass=apiuser&clientid=1001
-
 class Ubersmith
 {
 
