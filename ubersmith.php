@@ -2,25 +2,22 @@
 
 class Ubersmith
 {
-  
-  const VERSION = '0.1';
+  private $endpoint, $auth_string, $arguments_to_send, $result, $request_url, $response;
 
-  private $endpoint, $api_user, $api_pass, $arguments_to_send, $result, $request_url, $response;
+  var $ubersmith_functions = [ 'client.service.list' => 'client.service.list' ];
+  var $ubersmith_arguments = [ 'client.service.list' => [ 'client_id' ] ];
 
-  var $ubersmith_functions = [ 'list_services' => 'list_services.php' ];
-  var $ubersmith_arguments = [ 'list_services' => [ 'clientid' ] ];
-
-  function __construct($endpoint, $api_user, $api_pass)
+  function __construct($api_ip, $api_user, $api_pass)
   {
-    $this->endpoint    = $endpoint;
-    $this->api_user    = $api_user;
-    $this->api_pass    = $api_pass;
+    $this->endpoint    = 'http://' . $ip . '/api/2.0/?';
     $this->curl_handle = curl_init();
+    $this->auth_string = $api_user . ':' . $api_pass;
 
-    curl_setopt($this->handle, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($this->handle, CURLOPT_SSL_VERIFYHOST, 0);
-    curl_setopt($this->handle, CURLOPT_HEADER,         0);
-    curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($this->handle, CURLOPT_SSL_VERIFYPEER, 			0);
+    curl_setopt($this->handle, CURLOPT_SSL_VERIFYHOST, 			0);
+    curl_setopt($this->handle, CURLOPT_HEADER,         			0);
+    curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, 			1);
+    curl_setopt($this->handle, CURLOPT_USERPWD,        $this->auth_string); 
  }
 
   private function request()
@@ -30,6 +27,15 @@ class Ubersmith
 
     curl_setopt($this->curl_handle, CURL_URL, $this->request_url);
     $this->result = curl_exec($this->curl_handle);
+  }
+
+  private function generate_url()
+  {
+    $this->request_url = $this->endpoint . 'method=' . $this->provided_method . "&";
+    foreach($this->arguments_to_send as $key => $val)
+    {
+      $this->request_url .= $key . "=" . $val . "&";
+    }
   }
 
   public function __call($method, $args)
@@ -61,5 +67,5 @@ class Ubersmith
 }
 
 # $api = new Ubersmith('', '', '');
-# $api->list_services('{"clientid":1001}')->execute();
+# $api->list_services('{"client_id":1001}')->execute();
 # print_r($api->result());
