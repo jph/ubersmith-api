@@ -4,9 +4,6 @@ class Ubersmith
 {
   private $endpoint, $auth_string, $arguments_to_send, $result, $request_url, $response;
 
-  var $ubersmith_functions = [ 'client.service_list' => 'client.service_list' ];
-  var $ubersmith_arguments = [ 'client.service_list' => [ 'client_id' ] ];
-
   function __construct($api_ip, $api_user, $api_pass)
   {
     $this->endpoint    = 'http://' . $api_ip . '/api/2.0/?';
@@ -32,7 +29,7 @@ class Ubersmith
   private function generate_url()
   {
     $this->request_url = $this->endpoint . 'method=' . $this->provided_method . "&";
-    foreach($this->arguments_to_send as $key => $val)
+    foreach($this->provided_arguments as $key => $val)
     {
       $this->request_url .= $key . "=" . $val . "&";
     }
@@ -41,17 +38,9 @@ class Ubersmith
   public function __call($method, $args)
   {
     $this->provided_method = preg_replace('/_/', '.', $method, 1);
-    if(!$method)
-      throw new Exception("Method does not exist");
-
     $this->provided_arguments = (array) json_decode($args[0]);
-    foreach($this->provided_arguments as $provided_argument => $provided_value)
-    {
-      if(array_search($provided_argument, $this->ubersmith_arguments[$this->provided_method]) !== FALSE)
-        $this->arguments_to_send[$provided_argument] = $provided_value;
-    }
-    if(count($this->arguments_to_send) == 0)
-      throw new Exception("No valid arguments provided.");
+
+    if(count($this->provided_arguments) == 0) throw new Exception("No valid arguments provided.");
 
     $this->generate_url();
 
@@ -64,5 +53,3 @@ class Ubersmith
   }
 
 }
-
-// end

@@ -1,7 +1,9 @@
 Ubersmith API layer
-MIT License (see LICENSE)
 
-Basically what I intend to do here is make a nice layer for Ubersmith's 2.0 API, as the example shipped with the software is lacking in readability.
+Copyright (c) 2012 James Hynes
+For full license details see LICENSE
+
+What I've intended to do here is make a nice layer for Ubersmith's 2.0 API, as the example shipped with the software is lacking in readability.
 
 ```php
 <?
