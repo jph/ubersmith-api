@@ -4,28 +4,28 @@ class Ubersmith
 {
   private $endpoint, $auth_string, $arguments_to_send, $result, $request_url, $response;
 
-  var $ubersmith_functions = [ 'client.service.list' => 'client.service.list' ];
-  var $ubersmith_arguments = [ 'client.service.list' => [ 'client_id' ] ];
+  var $ubersmith_functions = [ 'client.service_list' => 'client.service_list' ];
+  var $ubersmith_arguments = [ 'client.service_list' => [ 'client_id' ] ];
 
   function __construct($api_ip, $api_user, $api_pass)
   {
-    $this->endpoint    = 'http://' . $ip . '/api/2.0/?';
+    $this->endpoint    = 'http://' . $api_ip . '/api/2.0/?';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
-    curl_setopt($this->handle, CURLOPT_SSL_VERIFYPEER, 			0);
-    curl_setopt($this->handle, CURLOPT_SSL_VERIFYHOST, 			0);
-    curl_setopt($this->handle, CURLOPT_HEADER,         			0);
-    curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, 			1);
-    curl_setopt($this->handle, CURLOPT_USERPWD,        $this->auth_string); 
+    curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYPEER,                     0);
+    curl_setopt($this->curl_handle, CURLOPT_SSL_VERIFYHOST,                     0);
+    curl_setopt($this->curl_handle, CURLOPT_HEADER,                             0);
+    curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER,                     1);
+    curl_setopt($this->curl_handle, CURLOPT_USERPWD,           $this->auth_string); 
  }
 
-  private function execute()
+  public function execute()
   {
-    if(strlen($this->url) < 1)
+    if(strlen($this->request_url) < 1)
       throw new Exception("No method called.");
 
-    curl_setopt($this->curl_handle, CURL_URL, $this->request_url);
+    curl_setopt($this->curl_handle, CURLOPT_URL, $this->request_url);
     $this->result = curl_exec($this->curl_handle);
   }
 
@@ -40,11 +40,11 @@ class Ubersmith
 
   public function __call($method, $args)
   {
-    $this->provided_method = $method;
+    $this->provided_method = preg_replace('/_/', '.', $method, 1);
     if(!$method)
       throw new Exception("Method does not exist");
 
-    $this->provided_arguments = json_decode($args[0]);
+    $this->provided_arguments = (array) json_decode($args[0]);
     foreach($this->provided_arguments as $provided_argument => $provided_value)
     {
       if(array_search($provided_argument, $this->ubersmith_arguments[$this->provided_method]) !== FALSE)
@@ -60,12 +60,9 @@ class Ubersmith
 
   public function result()
   {
-    # return json object
     return $this->result;
   }
 
 }
 
-# $api = new Ubersmith('', '', '');
-# $api->list_services('{"client_id":1001}')->execute();
-# print_r($api->result());
+// end
