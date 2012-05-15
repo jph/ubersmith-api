@@ -2,6 +2,8 @@
 
 class Ubersmith
 {
+  
+  const VERSION = '0.1';
 
   private $endpoint, $api_user, $api_pass, $arguments_to_send, $result, $request_url, $response;
 
@@ -20,20 +22,6 @@ class Ubersmith
     curl_setopt($this->handle, CURLOPT_HEADER,         0);
     curl_setopt($this->handle, CURLOPT_RETURNTRANSFER, 1);
  }
-
-  private function xml_to_json()
-  {
-    # convert property saved by request and save (xml reader here)
-  }
-
-  private function generate_url()
-  {
-    $this->request_url = $this->endpoint . $this->provided_method . ".php?api_login=" . $this->api_user . "&api_pass=" . $this->api_pass . "&";
-    foreach($this->arguments_to_send as $key => $val)
-    {
-      $this->request_url .= $key . "=" . $val . "&";
-    }
-  }
 
   private function request()
   {

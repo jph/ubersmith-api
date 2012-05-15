@@ -1,7 +1,8 @@
 Ubersmith API layer
 MIT Licensed
 
-This is an extremely early push. Nothing actually works yet. Final desired behavior below.
+Basically what I intend to do here is make a nice layer for Ubersmith's 2.0 API, as the example shipped with the software is lacking in readability.
+
 
 ```php
 <?
@@ -10,7 +11,7 @@ $result = $api->list_services('{ "clientid": 1001 }')->response();
 var_dump($result);
 ```
 
-Example result:
+The example result will more or less be a passthrough from the 2.0 API, it's just the actual implementation stuff above that I want to make easier.
 ```plain
 {
 "status":true,
