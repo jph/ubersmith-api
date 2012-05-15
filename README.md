@@ -3,7 +3,6 @@ MIT Licensed
 
 Basically what I intend to do here is make a nice layer for Ubersmith's 2.0 API, as the example shipped with the software is lacking in readability.
 
-
 ```php
 <?
 $api = new Ubersmith('http://192.168.0.10/api/', 'apiuser', 'apiuser');
