@@ -20,7 +20,7 @@ class Ubersmith
     curl_setopt($this->handle, CURLOPT_USERPWD,        $this->auth_string); 
  }
 
-  private function request()
+  private function execute()
   {
     if(strlen($this->url) < 1)
       throw new Exception("No method called.");
