@@ -6,7 +6,10 @@ class Ubersmith
 
   function __construct($api_ip, $api_user, $api_pass)
   {
-    $this->endpoint    = 'http://' . $api_ip . '/api/2.0/?';
+    if(preg_match('/^https?:\/\//', $api_ip))
+      $this->endpoint = $api_ip . '/api/2.0/?';
+    else
+      $this->endpoint = 'http://' . $api_ip . '/api/2.0/?';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
