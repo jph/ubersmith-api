@@ -31,10 +31,10 @@ class Ubersmith
 
   private function generate_url()
   {
-    $this->request_url = $this->endpoint . 'method=' . $this->provided_method . "&";
+    $this->request_url = $this->endpoint . 'method=' . rawurlencode($this->provided_method) . "&";
     foreach($this->provided_arguments as $key => $val)
     {
-      $this->request_url .= $key . "=" . $val . "&";
+      $this->request_url .= rawurlencode($key) . "=" . rawurlencode($val) . "&";
     }
   }
 
