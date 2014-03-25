@@ -15,6 +15,7 @@ class Ubersmith
     curl_setopt($this->curl_handle, CURLOPT_HEADER,                             0);
     curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER,                     1);
     curl_setopt($this->curl_handle, CURLOPT_USERPWD,           $this->auth_string); 
+    curl_setopt($this->curl_handle, CURLOPT_ENCODING,"");
  }
 
   public function execute()
