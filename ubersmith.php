@@ -6,7 +6,7 @@ class Ubersmith
 
   function __construct($api_ip, $api_user, $api_pass)
   {
-    $this->endpoint    = 'http://' . $api_ip . '/api/2.0/?';
+    $this->endpoint    = 'https://' . $api_ip . '/api/2.0/?';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
@@ -15,6 +15,7 @@ class Ubersmith
     curl_setopt($this->curl_handle, CURLOPT_HEADER,                             0);
     curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER,                     1);
     curl_setopt($this->curl_handle, CURLOPT_USERPWD,           $this->auth_string); 
+    curl_setopt($this->curl_handle, CURLOPT_ENCODING,"");
  }
 
   public function execute()
