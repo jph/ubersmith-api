@@ -9,7 +9,7 @@ class Ubersmith
     if(preg_match('/^https?:\/\//', $api_addr))
       $this->endpoint = $api_addr . '/api/2.0/?';
     else
-      $this->endpoint = 'http://' . $api_addr . '/api/2.0/?';
+      $this->endpoint = 'https://' . $api_addr . '/api/2.0/?';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
