@@ -4,12 +4,12 @@ class Ubersmith
 {
   private $endpoint, $auth_string, $arguments_to_send, $result, $request_url, $response;
 
-  function __construct($api_ip, $api_user, $api_pass)
+  function __construct($api_addr, $api_user, $api_pass)
   {
-    if(preg_match('/^https?:\/\//', $api_ip))
-      $this->endpoint = $api_ip . '/api/2.0/?';
+    if(preg_match('/^https?:\/\//', $api_addr))
+      $this->endpoint = $api_addr . '/api/2.0/?';
     else
-      $this->endpoint = 'http://' . $api_ip . '/api/2.0/?';
+      $this->endpoint = 'http://' . $api_addr . '/api/2.0/?';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
