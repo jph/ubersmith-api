@@ -4,9 +4,9 @@ class Ubersmith
 {
   private $endpoint, $auth_string, $arguments_to_send, $result, $request_url, $response;
 
-  function __construct($api_ip, $api_user, $api_pass)
+  function __construct($api_addr, $api_user, $api_pass)
   {
-    $this->endpoint    = 'https://' . $api_ip . '/api/2.0/?';
+    $this->endpoint = $api_addr . '/api/2.0/';
     $this->curl_handle = curl_init();
     $this->auth_string = $api_user . ':' . $api_pass;
 
@@ -29,10 +29,10 @@ class Ubersmith
 
   private function generate_url()
   {
-    $this->request_url = $this->endpoint . 'method=' . $this->provided_method . "&";
+    $this->request_url = $this->endpoint . "?" . 'method=' . rawurlencode($this->provided_method) . "&";
     foreach($this->provided_arguments as $key => $val)
     {
-      $this->request_url .= $key . "=" . $val . "&";
+      $this->request_url .= rawurlencode($key) . "=" . rawurlencode($val) . "&";
     }
   }
 
