@@ -16,6 +16,7 @@ class Ubersmith
     curl_setopt($this->curl_handle, CURLOPT_RETURNTRANSFER,                     1);
     curl_setopt($this->curl_handle, CURLOPT_USERPWD,           $this->auth_string); 
     curl_setopt($this->curl_handle, CURLOPT_ENCODING,"");
+    
  }
 
   public function execute()
@@ -33,6 +34,9 @@ class Ubersmith
     foreach($this->provided_arguments as $key => $val)
     {
       $this->request_url .= rawurlencode($key) . "=" . rawurlencode($val) . "&";
+    }
+    if(count($this->provided_arguments)>0){
+      $this->request_url=substr($this->request_url, 0, -1);//remove the last &
     }
   }
 
